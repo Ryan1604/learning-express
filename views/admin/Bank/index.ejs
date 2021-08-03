@@ -1,0 +1,176 @@
+<%- include('../../partials/header.ejs') %>
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <%- include('../../partials/sidebar.ejs') %>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <%- include('../../partials/navbar.ejs') %>
+                <!-- End of Topbar -->
+                
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+                    <%- include('../../partials/message.ejs') %>
+
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-4 text-gray-800">Data Bank</h1>
+
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Name Bank</th>
+                                            <th>Nomor Rekening</th>
+                                            <th>Name</th>
+                                            <th>Image</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% for(let i = 0; i < bank.length; i++) { %>
+                                            <tr>
+                                                <td><%= i + 1 %></td> 
+                                                <td><%= bank[i].nameBank %></td> 
+                                                <td><%= bank[i].nomorRekening %></td> 
+                                                <td><%= bank[i].name %></td> 
+                                                <td>
+                                                    <img src="http://localhost:3000/<%= bank[i].imageUrl %>" alt="<%= bank[i].name %>" width="70px">
+                                                </td> 
+                                                <td>
+                                                    <form action="/admin/bank/<%= bank[i].id %>?_method=DELETE" method="POST">
+                                                        <a href="javascript:void(0)" type="button" class="btn btn-warning btn-sm" id="btn-update" data-id="<%= bank[i].id %>" data-name="<%= bank[i].name %>" data-namebank="<%= bank[i].nameBank %>" data-nomorrekening="<%= bank[i].nomorRekening %>"><i class="fas fa-edit"></i></a>
+                                                        <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        <% } %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+      
+            <!-- Footer -->
+            <%- include('../../partials/footer.ejs') %>
+            <!-- End of Footer -->
+        </div>
+        <!-- End of Content Wrapper -->
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Add Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"> 
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Add Bank</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form method="POST" action="/admin/bank" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="form-group">
+                      <label for="nameBank">Name Bank</label>
+                      <input type="text" class="form-control" id="nameBank" name="nameBank" placeholder="Enter name bank" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="nomorRekening">Nomor Rekening</label>
+                      <input type="text" class="form-control" id="nomorRekening" name="nomorRekening" placeholder="Enter nomor rekening" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="name">Name</label>
+                      <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="image">Image</label>
+                      <input type="file" class="form-control" id="image" name="image" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+          </div>
+        </div>
+    </div>
+    <!-- End Modal -->
+
+    <!-- Edit Modal -->
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="editModalLabel">Edit Category</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form method="POST" action="/admin/bank?_method=PUT" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="form-group">
+                      <label for="editNameBank">Name Bank</label>
+                      <input type="hidden" class="form-control" id="id" name="id">
+                      <input type="text" class="form-control" id="editNameBank" name="editNameBank" placeholder="Enter name" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="editNomorRekening">Nomor Rekening</label>
+                      <input type="text" class="form-control" id="editNomorRekening" name="editNomorRekening" placeholder="Enter name" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="editName">Name</label>
+                      <input type="text" class="form-control" id="editName" name="editName" placeholder="Enter name" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="image">Image</label>
+                      <input type="file" class="form-control" name="image" placeholder="Enter name">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </div>
+            </form>
+          </div>
+        </div>
+    </div>
+    <!-- End Modal -->
+
+    <%- include('../../partials/js.ejs') %>
+
+    <script>
+        $('#dataTable').on('click', '#btn-update', function(){
+            let id = $(this).data('id')
+            let nameBank = $(this).data('namebank')
+            let nomorRekening = $(this).data('nomorrekening')
+            let name = $(this).data('name')
+            $('#editModal').modal('show')
+            $('#id').val(id)
+            $('#editNameBank').val(nameBank)
+            $('#editNomorRekening').val(nomorRekening)
+            $('#editName').val(name)
+        })
+    </script>

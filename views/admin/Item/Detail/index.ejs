@@ -1,0 +1,270 @@
+<%- include('../../../partials/header.ejs') %>
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <%- include('../../../partials/sidebar.ejs') %>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <%- include('../../../partials/navbar.ejs') %>
+                <!-- End of Topbar -->
+                
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+                <%- include('../../../partials/message.ejs') %>
+
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-4 text-gray-800">Detail Item</h1>
+
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#show" role="tab" aria-controls="home" aria-selected="true">Show Feature</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#show-a" role="tab" aria-controls="profile" aria-selected="false">Show Activity</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                        <!-- Show Feature -->
+                        <div class="tab-pane fade show active" id="show" role="tabpanel" aria-labelledby="home-tab">
+                            <div class="card shadow mb-4 mt-2">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <form method="POST" action="/admin/item/feature" enctype="multipart/form-data">
+                                                <div class="form-group">
+                                                    <label for="name">Name</label>
+                                                    <input type="hidden" id="itemId" name="itemId" value="<%= itemId %>">
+                                                    <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="qty">QTY</label>
+                                                    <input type="number" class="form-control" id="qty" name="qty" placeholder="Enter qty" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="image">Image</label>
+                                                    <input type="file" class="form-control" id="image" name="image" required>
+                                                </div>
+                                                <button type="submit" class="btn btn-primary">Save</button>
+                                            </form>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>No</th>
+                                                            <th>Name</th>
+                                                            <th>QTY</th>
+                                                            <th>Image</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <% for(let i = 0; i < feature.length; i++) { %>
+                                                            <tr>
+                                                                <td><%= i + 1 %></td> 
+                                                                <td><%= feature[i].name %></td> 
+                                                                <td><%= feature[i].qty %></td> 
+                                                                <td>
+                                                                    <img src="http://localhost:3000/<%= feature[i].imageUrl %>" alt="<%= feature[i].name %>" width="70px">
+                                                                </td> 
+                                                                <td>
+                                                                    <form action="/admin/item/<%= itemId %>/feature/<%= feature[i].id %>?_method=DELETE" method="POST">
+                                                                        <a href="javascript:void(0)" type="button" class="btn btn-warning btn-sm" id="btn-update" data-id="<%= feature[i].id %>" data-name="<%= feature[i].name %>" data-qty="<%= feature[i].qty %>"><i class="fas fa-edit"></i></a>
+                                                                        <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
+                                                                    </form>
+                                                                </td>
+                                                            </tr>
+                                                        <% } %>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Show Activity -->
+                        <div class="tab-pane fade" id="show-a" role="tabpanel" aria-labelledby="home-tab">
+                            <div class="card shadow mb-4 mt-2">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <form method="POST" action="/admin/item/activity" enctype="multipart/form-data">
+                                                <div class="form-group">
+                                                    <label for="name">Name</label>
+                                                    <input type="hidden" name="itemId" value="<%= itemId %>">
+                                                    <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="type">Type</label>
+                                                    <input type="text" class="form-control" id="type" name="type" placeholder="Enter type" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="image">Image</label>
+                                                    <input type="file" class="form-control" id="image" name="image" required>
+                                                </div>
+                                                <button type="submit" class="btn btn-primary">Save</button>
+                                            </form>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered" id="dataTable2" width="100%" cellspacing="0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>No</th>
+                                                            <th>Name</th>
+                                                            <th>Type</th>
+                                                            <th>Image</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <% for(let i = 0; i < activity.length; i++) { %>
+                                                            <tr>
+                                                                <td><%= i + 1 %></td> 
+                                                                <td><%= activity[i].name %></td> 
+                                                                <td><%= activity[i].type %></td> 
+                                                                <td>
+                                                                    <img src="http://localhost:3000/<%= activity[i].imageUrl %>" alt="<%= activity[i].name %>" width="70px">
+                                                                </td> 
+                                                                <td>
+                                                                    <form action="/admin/item/<%= itemId %>/activity/<%= activity[i].id %>?_method=DELETE" method="POST">
+                                                                        <a href="javascript:void(0)" type="button" class="btn btn-warning btn-sm" id="btn-update-act" data-id="<%= activity[i].id %>" data-name="<%= activity[i].name %>" data-type="<%= activity[i].type %>"><i class="fas fa-edit"></i></a>
+                                                                        <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
+                                                                    </form>
+                                                                </td>
+                                                            </tr>
+                                                        <% } %>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+      
+            <!-- Footer -->
+            <%- include('../../../partials/footer.ejs') %>
+            <!-- End of Footer -->
+        </div>
+        <!-- End of Content Wrapper -->
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Edit Modal Feature -->
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="editModalLabel">Edit Feature</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form method="POST" action="/admin/item/update/feature?_method=PUT" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="form-group">
+                      <label for="name">Name</label>
+                      <input type="hidden" class="form-control" id="_id" name="id">
+                      <input type="hidden" class="form-control" value="<%= itemId %>" name="itemId">
+                      <input type="text" class="form-control" id="_name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="qty">QTY</label>
+                      <input type="number" class="form-control" id="_qty" name="qty" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="image">Image</label>
+                      <input type="file" class="form-control" name="image">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </div>
+            </form>
+          </div>
+        </div>
+    </div>
+    <!-- End Modal -->
+
+    <!-- Edit Modal Activity -->
+    <div class="modal fade" id="editModalAct" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="editModalLabel">Edit Activity</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form method="POST" action="/admin/item/update/activity?_method=PUT" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="form-group">
+                      <label for="name">Name</label>
+                      <input type="hidden" class="form-control" id="_idAct" name="id">
+                      <input type="hidden" class="form-control" value="<%= itemId %>" name="itemId">
+                      <input type="text" class="form-control" id="_nameAct" name="name" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="type">Type</label>
+                      <input type="text" class="form-control" id="_typeAct" name="type" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="image">Image</label>
+                      <input type="file" class="form-control" name="image">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </div>
+            </form>
+          </div>
+        </div>
+    </div>
+    <!-- End Modal -->
+
+    <%- include('../../../partials/js.ejs') %>
+
+    <script>
+        CKEDITOR.replace( 'desc' );
+    </script>
+
+    <script>
+        $('#dataTable').on('click', '#btn-update', function(){
+            let id = $(this).data('id')
+            let name = $(this).data('name')
+            let qty = $(this).data('qty')
+            $('#editModal').modal('show')
+            $('#_id').val(id)
+            $('#_name').val(name)
+            $('#_qty').val(qty)
+        })
+    </script>
+    <script>
+        $('#dataTable2').on('click', '#btn-update-act', function(){
+            let id = $(this).data('id')
+            let name = $(this).data('name')
+            let type = $(this).data('type')
+            console.log(type)
+            $('#editModalAct').modal('show')
+            $('#_idAct').val(id)
+            $('#_nameAct').val(name)
+            $('#_typeAct').val(type)
+        })
+    </script>
