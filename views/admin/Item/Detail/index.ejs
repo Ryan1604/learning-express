@@ -72,7 +72,7 @@
                                                                 <td><%= feature[i].name %></td> 
                                                                 <td><%= feature[i].qty %></td> 
                                                                 <td>
-                                                                    <img src="http://localhost:3000/<%= feature[i].imageUrl %>" alt="<%= feature[i].name %>" width="70px">
+                                                                    <img src="https://admin-learning.herokuapp.com/<%= feature[i].imageUrl %>" alt="<%= feature[i].name %>" width="70px">
                                                                 </td> 
                                                                 <td>
                                                                     <form action="/admin/item/<%= itemId %>/feature/<%= feature[i].id %>?_method=DELETE" method="POST">
@@ -132,7 +132,7 @@
                                                                 <td><%= activity[i].name %></td> 
                                                                 <td><%= activity[i].type %></td> 
                                                                 <td>
-                                                                    <img src="http://localhost:3000/<%= activity[i].imageUrl %>" alt="<%= activity[i].name %>" width="70px">
+                                                                    <img src="https://admin-learning.herokuapp.com/<%= activity[i].imageUrl %>" alt="<%= activity[i].name %>" width="70px">
                                                                 </td> 
                                                                 <td>
                                                                     <form action="/admin/item/<%= itemId %>/activity/<%= activity[i].id %>?_method=DELETE" method="POST">
